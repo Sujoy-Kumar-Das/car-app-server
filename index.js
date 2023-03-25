@@ -94,6 +94,28 @@ app.post('/orders',async(req,res)=>{
     
 })
 
+// get all orders
+app.get('/orders',async(req,res)=>{
+    try {
+        let query = {};
+        if(req.query.email){
+            query =  {
+                email: req.query.email
+            }
+        };
+        const curssor = ordersColections.find(query)
+        const orders = await curssor.toArray();
+        res.send(orders)
+    } catch (error) {
+        res.send({
+            success:false,
+            data:[],
+            message:error
+        })
+        console.log( error.name,error.message)
+    }
+})
+
 
 
 
